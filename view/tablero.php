@@ -1,7 +1,5 @@
 <?php
-require 'coreapp/Conection.php';
-$conn = new Conection();
-$mysqli = $conn->conectar();
+include '../controller/Lista.php';
 ?>
 
 <!DOCTYPE html>
@@ -16,11 +14,17 @@ $mysqli = $conn->conectar();
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 		<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	    <link type="text/css" rel="stylesheet" href="materialize/css/materialize.css"  media="screen,projection"/>
-	    <script src="materialize/js/materialize.min.js"></script>
+	    <link type="text/css" rel="stylesheet" href="../materialize/css/materialize.css"  media="screen,projection"/>
+	    <script src="../materialize/js/materialize.min.js"></script>
         <script type="text/javascript">
 			function estado(id){
-				location.href="estado.php?estado="+id;
+				var estado = document.getElementById(id).checked;
+				if(estado == true){
+					location.href="estado.php?estado=1&codigo="+id;
+				}else{
+					location.href="estado.php?estado=0&codigo="+id;
+				}
+				
 			}
 		</script>
 			<style>
@@ -56,11 +60,13 @@ $mysqli = $conn->conectar();
 <form action="">
 	<div class="espaciado"></div>
 	<?php
+	
+	$data = MostrarLista();
 
-	$busca=$mysqli->query('SELECT * FROM campos');
-	echo "Numero de solicitudes: " . $busca->num_rows;
-	while($fila = $busca->fetch_assoc()){
-	    if($fila['activo'] == 1){
+	while ($fila = $data->fetch_assoc()) 
+	{
+	   if($fila['activo'] == 1)
+	   {
 		echo '
 			<div class="col m12 row">
 				<div class="col m6">
@@ -99,6 +105,7 @@ $mysqli = $conn->conectar();
 			}
 
 		}
+	  
 	?>
 </form>
 

@@ -20,16 +20,9 @@ class Acciones
 
 	public function ListadoSolicitudes()
 	{
-		$sql = "SELECT activo FROM campos";
+		$sql = "SELECT id, nombre, activo FROM campos";
 		$data = $this->conn->query($sql);
 		return $data;
 	}
-}
-
-$acciones = new Acciones();
-$data = $acciones->ListadoSolicitudes();
-
-while ($fila = $data->fetch_assoc()) {
-	echo $fila['activo']."<br>";
 }
 ?>
